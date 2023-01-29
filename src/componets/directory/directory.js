@@ -12,7 +12,7 @@ const Directory = () => {
         setState(data);
     }, []);
 
-    console.log(state);
+    // console.log(state);
     return (
         <div className="directory-Menu">
 
