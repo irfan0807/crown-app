@@ -19,7 +19,7 @@ const Shop = () => {
         state.map(({id , ...props}) =>
         
 
-       <PreviewCollection {...props}/>
+       <PreviewCollection key={id} {...props}/>
            
           
         )
