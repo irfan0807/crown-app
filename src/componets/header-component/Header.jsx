@@ -22,7 +22,7 @@ const Header = () => {
             CONTACT
         </Link>
         <Link to ='/signin' className='option'>
-            SignIn
+           SIGNIN
         </Link>
       </div>
        

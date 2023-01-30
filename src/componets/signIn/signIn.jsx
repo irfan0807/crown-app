@@ -1,4 +1,6 @@
 import React , {useState}from "react";
+import CustomButton from "../customButton/customButton";
+import FormInput from "../form-input/form-input";
 import './signIn.scss';
 
 
@@ -13,6 +15,7 @@ const SignI = () =>{
 
     }
     const handleChange = (e) =>{
+     
 
         const {value , name} = e.target; 
         setstate({[name] :value});
@@ -25,11 +28,12 @@ const SignI = () =>{
             <span>Sign in with your email and password</span>
 
             <form onSubmit={handleSubmit}>
-                <input name="email" type="email" value={state.email} onChange={handleChange} required/>
+            
+                <FormInput label='email' name="email" type="email" value={state.email} handleChange={handleChange}  required/>
                 <label>Email</label>
-                <input name="password" type="password" value={state.password} onChange={handleChange} required/>
+                <FormInput label='password' name="password" type="password" value={state.password} handleChange={handleChange}  required/>
                 <label>password</label>
-                <input type='submit' value ='submit' />
+                <CustomButton type='submit'  >Sign In</CustomButton>
             </form>
 
         </div>
