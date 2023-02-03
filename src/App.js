@@ -6,49 +6,60 @@ import Homepage from './pages/homepage/Homepage';
 import ShopPage from './pages/shop/shop.jsx';
 import Header from './componets/header-component/Header'
 import SignIn from './pages/signIn-Signup/signIn-signup';
-import { auth } from './firebase/firebase.utils'
+import { auth, createUserProfileDocuments } from './firebase/firebase.utils'
 
 
 
 // useRef = unsubscribe = null;
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+class App extends React.Component {
+  constructor() {
+    super();
 
+    this.state = {
+      currentUser: null
+    };
+  }
 
+  unsubscribeFromAuth = null;
 
-  useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      setCurrentUser(user);
-    })
-    console.log(currentUser);
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocuments(userAuth);
 
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
 
+          console.log(this.state);
+        });
+      }
 
+      this.setState({ currentUser: userAuth });
+    });
+  }
 
-  }, [currentUser]);
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
 
-
-
-
-
-
-  return (
-
-    <div>
-      <Header currentUser={currentUser} />
-      <Switch >
-        <Route exact path='/' component={Homepage} />
-        <Route path='/shops' component={ShopPage} />
-        <Route path='/signin' component={SignIn} />4
-      </Switch>
-    </div>
-
-
-
-
-
-  );
+  render() {
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser} />
+        <Switch>
+          <Route exact path='/' component={Homepage} />
+          <Route path='/shop' component={ShopPage} />
+          <Route path='/signin' component={SignIn} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
