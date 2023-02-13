@@ -54,7 +54,7 @@ class App extends React.Component {
         <Header currentUser={this.state.currentUser} />
         <Switch>
           <Route exact path='/' component={Homepage} />
-          <Route path='/shop' component={ShopPage} />
+          <Route path='/shops' component={ShopPage} />
           <Route path='/signin' component={SignIn} />
         </Switch>
       </div>
