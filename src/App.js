@@ -15,41 +15,92 @@ import { setCurrentUser } from './redux/user/user.actions';
 
 // useRef = unsubscribe = null;
 
+// class App extends React.Component {
+//   // constructor() {
+//   //   super();
+
+//   //   this.state = {
+//   //     currentUser: null
+//   //   };
+//   // }
+
+//   unsubscribeFromAuth = null;
+
+//   componentDidMount() {
+//     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+//       if (userAuth) {
+//         const userRef = await createUserProfileDocuments(userAuth);
+
+//         // userRef.onSnapshot(snapShot => {
+//         //   this.setState({
+//         //     currentUser: {
+//         //       id: snapShot.id,
+//         //       ...snapShot.data()
+//         //     }
+//         //   });
+
+//         //   console.log(this.state);
+//         // });
+//         userRef.onSnapshot(snapShot => {
+//           setCurrentUser({
+//             id: snapShot.id,
+//             ...snapShot.data()
+//           })
+//         })
+//       }
+
+//       setCurrentUser({ userAuth });
+//     });
+//   }
+
+//   componentWillUnmount() {
+//     this.unsubscribeFromAuth();
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <Header />
+//         <Switch>
+//           <Route exact path='/' component={Homepage} />
+//           <Route path='/shops' component={ShopPage} />
+//           <Route path='/signin' component={SignIn} />
+//         </Switch>
+//       </div>
+//     );
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => ({
+
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+
+
+// })
+
+
+// export default connect(null, mapDispatchToProps)(App);
+
+
 class App extends React.Component {
-  // constructor() {
-  //   super();
-
-  //   this.state = {
-  //     currentUser: null
-  //   };
-  // }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    const { setCurrentUser } = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocuments(userAuth);
 
-        // userRef.onSnapshot(snapShot => {
-        //   this.setState({
-        //     currentUser: {
-        //       id: snapShot.id,
-        //       ...snapShot.data()
-        //     }
-        //   });
-
-        //   console.log(this.state);
-        // });
         userRef.onSnapshot(snapShot => {
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data()
-          })
-        })
+          });
+        });
       }
 
-      setCurrentUser({ userAuth });
+      setCurrentUser(userAuth);
     });
   }
 
@@ -63,7 +114,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Homepage} />
-          <Route path='/shops' component={ShopPage} />
+          <Route path='/shop' component={ShopPage} />
           <Route path='/signin' component={SignIn} />
         </Switch>
       </div>
@@ -71,12 +122,11 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-
+const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
+});
 
-
-})
-
-
-export default connect(null, mapDispatchToProps)(App);
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
