@@ -1,6 +1,7 @@
 import React, { useState ,useEffect} from 'react'
 import shopData from '../../data/collections';
 import PreviewCollection from '../../componets/preview-collection-componet/preview-collection-component'
+
 const Shop = () => {
   console.log(shopData);
   const [state, setstate] = useState([]);
@@ -12,7 +13,9 @@ const Shop = () => {
 
 
   return (
+    <> 
 
+    
     <div className="shop-page">
 
       {
@@ -27,7 +30,8 @@ const Shop = () => {
 
 
 
-    </div>
+    </div></>
+
 
 
   
