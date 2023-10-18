@@ -92,6 +92,7 @@ class SignUp extends React.Component {
               required
             />
             <CustomButton type='submit'>SIGN UP</CustomButton>
+            <h2>jsut want check</h2>
           </form>
         </div>
       );
