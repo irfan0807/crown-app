@@ -7,7 +7,7 @@ const Homepage = () => {
   return (
     <div className="homepage">
         <Directory />
-        Hello world!
+        THIS IS CHANGE HAS BEEN MADE
         
     </div>
     
